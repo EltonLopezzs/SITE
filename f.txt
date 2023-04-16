@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gráfico de Bolsa de Valores</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://openexchangerates.org/api/latest.json?app_id=YOUR_APP_ID&callback=processResult"></script>
+  <style>
+    canvas {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .select-currency {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas id="myChart"></canvas>
+    <div class="select-currency">
+      <label for="currency">Selecione a Moeda:</label>
+      <select id="currency">
+        <option value="USD">Dólar Americano</option>
+        <option value="BRL">Real Brasileiro</option>
+        <option value="EUR">Euro</option>
+        <option value="JPY">Iene Japonês</option>
+        <option value="GBP">Libra Esterlina</option>
+        <option value="CAD">Dólar Canadense</option>
+        <option value="AUD">Dólar Australiano</option>
+        <option value="CHF">Franco Suíço</option>
+        <option value="CNY">Renminbi Chinês</option>
+        <option value="HKD">Dólar de Hong Kong</option>
+        <option value="INR">Rupia Indiana</option>
+        <option value="KRW">Won Sul-Coreano</option>
+        <option value="MXN">Peso Mexicano</option>
+        <option value="MYR">Ringgit Malaio</option>
+        <option value="NZD">Dólar Neozelandês</option>
+        <option value="RUB">Rublo Russo</option>
+        <option value="SGD">Dólar de Singapura</option>
+        <option value="TRY">Lira Turca</option>
+        <option value="ZAR">Rand Sul-Africano</option>
+      </select>
+    </div>
+  </div>
+
+  <script>
+    var currencies = {};
+    function processResult(data) {
+      currencies = data.rates;
+      plotChart('USD');
+    }
+
+    function plotChart(base) {
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var labels = [];
+      var data = [];
+      for (var currency in currencies) {
+        if (currency !== base) {
+          labels.push(currency);
+          data.push(currencies[currency]);
+        }
+      }
+
+      var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Taxa de Câmbio',
+              data: data,
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                }
+              }

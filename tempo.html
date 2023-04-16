@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard de Previsão do Tempo</title>
+
+
+  <h3>
+    <ol type=".">
+        <li>
+            <a href="index.html"><button>INICIO</button></a>
+        </li>
+      </h3>
+
+<style style="
+background-color: black;
+color: black;
+
+
+
+
+
+">
+  <div style="border: 50px solid rgb(6, 6, 6); padding: 4%;" >
+  <style>
+    
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-city {
+      margin: 10px;
+    }
+    .city-info {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .city-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .city-temp {
+      font-size: 48px;
+      font-weight: bold;
+    }
+    .city-desc {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .city-icon {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="search-city">
+      <label for="city">Digite a cidade:</label>
+      <input type="text" id="city" name="city">
+      <button type="button" onclick="searchCity()">Pesquisar</button>
+    </div>
+    <div class="city-info">
+      <div class="city-name"></div>
+      <div class="city-temp"></div>
+      <div class="city-desc"></div>
+      <img class="city-icon" src="" alt="">
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function searchCity() {
+      var cityName = $('#city').val();
+      $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=2f7c7d8ef35d32451a0feade23134e01",
+        success: function(result) {
+          $('.city-name').html(result.name);
+          $('.city-temp').html(result.main.temp + "°C");
+          $('.city-desc').html(result.weather[0].description);
+          $('.city-icon').attr('src', 'http://openweathermap.org/img/w/' + result.weather[0].icon + '.png');
+        },
+        error: function() {
+          alert('Cidade não encontrada');
+        }
+      });
+    }
+  </script>
+  
+  </div>
+</style>
+</body>
+</html>

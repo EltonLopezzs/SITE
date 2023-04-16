@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gráfico de Bolsa de Valores</title>
+
+
+
+<div border="80%" style="width: 99%; background-color: rgb(224, 224, 252);
+height: 50%; border-color: rgb(48, 82, 42); border: 4px solid rgb(187, 41, 41); "> 
+
+<h3>
+    <ol type=".">
+        <li>
+            <a href="index.html"><button>INICIO</button></a>
+        </li>
+      </h3>
+
+
+
+<h1 style="margin-left: 30%;">TABELA DE BOLSA DE VALORES</h1>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    canvas {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myChart"></canvas>
+
+  <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
+        datasets: [
+          {
+            label: 'Dólar',
+            data: [5.30, 5.40, 5.50, 5.60, 5.70, 5.80, 5.90],
+            borderColor: 'blue',
+            fill: false
+          },
+          {
+            label: 'Real',
+            data: [1.00, 1.10, 1.20, 1.30, 1.40, 1.50, 1.60],
+            borderColor: 'green',
+            fill: false
+          },
+          {
+            label: 'Euro',
+            data: [6.00, 6.10, 6.20, 6.30, 6.40, 6.50, 6.60],
+            borderColor: 'red',
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Gráfico de Bolsa de Valores'
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false
+        },
+        annotation: {
+          annotations: [
+            {
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 5,
+              borderColor: 'gray',
+              borderWidth: 1,
+              label: {
+                backgroundColor: 'gray',
+                content: 'Média',
+                enabled: true
+              }
+            }
+          ]
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              callback: function(value, index, values) {
+                return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+              }
+            }
+          }]
+        }
+      }
+    });
+  </script>
+
+</div>
+</body>
+</html>
